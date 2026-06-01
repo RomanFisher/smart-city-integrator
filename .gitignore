@@ -1,0 +1,13 @@
+# Node
+node_modules/
+dist/
+
+# Bazy danych
+backend/data/
+*.sqlite
+
+# Zmienne środowiskowe (jeśli masz)
+.env
+
+# Systemowe
+.DS_Store

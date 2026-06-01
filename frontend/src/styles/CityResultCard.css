@@ -1,0 +1,169 @@
+/* Nowoczesna karta wyników miasta */
+.city-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+  padding: 22px;
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  width: 100%;
+  min-width: 0;
+}
+
+.city-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.city-result-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.city-result-card .card-title {
+  color: var(--text-color);
+  font-size: 1.75rem;
+  margin: 0;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.score-badge {
+  min-width: 110px;
+  max-width: 140px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  text-align: center;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+}
+
+.score-badge-high {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-color: #86efac;
+}
+
+.score-badge-medium {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fcd34d;
+}
+
+.score-badge-low {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-color: #fca5a5;
+}
+
+.score-value {
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #111827;
+}
+
+.score-text {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: #475569;
+}
+
+.city-result-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+}
+
+.city-result-panel {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  min-width: 0;
+}
+
+.city-result-panel-wide {
+  grid-column: 1 / -1;
+}
+
+.city-result-panel h3 {
+  font-size: 0.95rem;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(226, 232, 240, 0.9);
+  width: 100%;
+  min-width: 0;
+}
+
+.metric-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #64748b;
+  min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.metric-value {
+  font-size: 0.95rem;
+  color: #0f172a;
+  text-align: right;
+  white-space: nowrap;
+  min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.card-empty {
+  text-align: center;
+  color: #64748b;
+  padding: 40px 20px;
+}
+
+@media (max-width: 768px) {
+  .city-result-card {
+    padding: 18px;
+  }
+
+  .city-result-header {
+    flex-direction: column;
+  }
+
+  .score-badge {
+    width: 100%;
+  }
+
+  .metric-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metric-value {
+    text-align: left;
+  }
+}

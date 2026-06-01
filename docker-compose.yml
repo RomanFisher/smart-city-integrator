@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: romanfisher/smart-city-backend:latest
+    container_name: sci_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/smart-city-db
+      - JWT_SECRET=SuperSecretKey123_SmartCity
+    volumes:
+      - ./backend/data:/app/data
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: romanfisher/smart-city-frontend:latest
+    container_name: sci_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: sci_mongo
+    command: ["mongod", "--quiet"]
+    logging:
+      driver: "none" # Вимикаємо спам у консоль від бази даних
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

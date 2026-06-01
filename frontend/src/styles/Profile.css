@@ -1,0 +1,42 @@
+/* Profile Page Styles */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: calc(100vh - 100px);
+}
+
+.profile-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 500px;
+}
+
+.profile-box h2 {
+  margin-bottom: 30px;
+  color: var(--text-color);
+  font-size: 1.8rem;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile-form .form-group {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .profile-box {
+    padding: 25px;
+  }
+
+  .profile-box h2 {
+    font-size: 1.5rem;
+  }
+}

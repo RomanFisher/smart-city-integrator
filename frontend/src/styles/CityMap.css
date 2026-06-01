@@ -1,0 +1,215 @@
+.city-map-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+}
+
+.city-map-header h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.1rem;
+}
+
+.city-map-header p {
+  margin: 4px 0 14px;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.city-map-wrapper {
+  position: relative;
+  width: min(100%, 600px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(59, 130, 246, 0.08), transparent 24%),
+    radial-gradient(circle at 78% 32%, rgba(16, 185, 129, 0.08), transparent 22%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.city-map-borders {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.city-map-shape {
+  position: absolute;
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-radius: 48% 52% 45% 55% / 40% 42% 58% 60%;
+}
+
+.city-map-shape-1 {
+  inset: 7% 16% 10% 16%;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.city-map-shape-2 {
+  inset: 17% 28% 20% 22%;
+  border-style: dashed;
+  opacity: 0.45;
+}
+
+.city-map-shape-3 {
+  inset: 30% 40% 36% 36%;
+  opacity: 0.28;
+}
+
+.city-map-point-wrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.city-map-point {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, var(--marker-center) 0%, var(--marker-color) 22%, rgba(255, 255, 255, 0) 72%);
+  opacity: var(--marker-opacity, 0.75);
+  filter: blur(0.35px) saturate(1.08);
+  transform: translateZ(0);
+  transition: transform 0.18s ease, opacity 0.18s ease, filter 0.18s ease;
+}
+
+.city-map-point-wrapper:hover .city-map-point {
+  transform: scale(1.12);
+  opacity: 1;
+  filter: blur(0) saturate(1.15);
+}
+
+.city-map-name {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  color: #0f172a;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  max-width: 130px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.city-map-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%);
+  min-width: 210px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.96);
+  color: #e2e8f0;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 4;
+  animation: cityMapTooltipIn 0.16s ease;
+}
+
+.city-map-tooltip strong {
+  color: #ffffff;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+
+.city-map-tooltip span {
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.city-map-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(15, 23, 42, 0.96);
+}
+
+.city-map-legend {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.city-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.legend-dot.good {
+  background: #16a34a;
+}
+
+.legend-dot.medium {
+  background: #f59e0b;
+}
+
+.legend-dot.low {
+  background: #dc2626;
+}
+
+.map-empty {
+  text-align: center;
+  color: #64748b;
+  padding: 26px;
+}
+
+@keyframes cityMapTooltipIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .city-map-card {
+    padding: 14px;
+  }
+
+  .city-map-wrapper {
+    width: 100%;
+  }
+
+  .city-map-name {
+    font-size: 0.68rem;
+  }
+
+  .city-map-tooltip {
+    min-width: 185px;
+  }
+}
