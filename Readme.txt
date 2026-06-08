@@ -87,3 +87,22 @@ Wskazówki testowe:
 - Po zalogowaniu należy użyć przycisku "Uruchom analizę", aby wyzwolić proces ETL 
   (pobranie z REST, odczyt z CSV, przeliczenie, transakcja ORM).
 - Po zakończeniu analizy można przełączać widoki oraz wyeksportować dane do XML.
+
+
+5. LINKI DO REPOZYTORIUM I KONTENERÓW (Do weryfikacji przez prowadzącego)
+--------------------------------------------------------------------------------
+Kod źródłowy projektu na platformie GitHub:
+-> https://github.com/RomanFisher/smart-city-integrator
+
+Gotowe, skompilowane obrazy aplikacji (Docker Hub):
+-> Backend:  https://hub.docker.com/r/romanfisher/smart-city-backend
+-> Frontend: https://hub.docker.com/r/romanfisher/smart-city-frontend
+
+Aby uruchomić system bezpośrednio z chmury (bez lokalnego budowania kodu z użyciem flagi --build), 
+wystarczy posiadać plik docker-compose.yml z archiwum i wpisać w terminalu:
+
+$ docker-compose pull
+$ docker-compose up -d
+
+System automatycznie pobierze gotowe obrazy z repozytorium romanfisher i uruchomi 
+całą platformę integracyjną w kilkanaście sekund.
