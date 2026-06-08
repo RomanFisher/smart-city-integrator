@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // ============================================================================
-// Walidacja po stronie serwera (Spełnienie wymogu projektowego)
+// Walidacja po stronie serwera 
 // ============================================================================
 const isValidEmail = (email) => {
   // Proste wyrażenie regularne do sprawdzania poprawności formatu email
@@ -39,13 +39,13 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'Hasło musi zawierać co najmniej 6 znaków' });
     }
 
-    const istniejącyUzytkownik = await User.findOne({ email });
-    if (istniejącyUzytkownik) {
+    const istniejacyUzytkownik = await User.findOne({ email });
+    if (istniejacyUzytkownik) {
       return res.status(400).json({ message: 'Użytkownik o podanym emailu już istnieje' });
     }
 
-    const sól = await bcrypt.genSalt(10);
-    const zahashowaneHaslo = await bcrypt.hash(password, sól);
+    const sol = await bcrypt.genSalt(10);
+    const zahashowaneHaslo = await bcrypt.hash(password, sol);
 
     const nowyUzytkownik = new User({
       email,

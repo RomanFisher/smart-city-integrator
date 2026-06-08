@@ -35,7 +35,7 @@ services:
     container_name: sci_mongo
     command: ["mongod", "--quiet"]
     logging:
-      driver: "none" # Вимикаємо спам у консоль від бази даних
+      driver: "none" 
     ports:
       - "27017:27017"
     volumes:

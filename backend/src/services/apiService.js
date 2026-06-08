@@ -56,16 +56,27 @@ const requestWithRetry = async (url, options, etykieta) => {
 };
 
 // Zahardkodowana mapa współrzędnych geograficznych dla miast z projektu
+// Uwaga: klucze miast używają transliteracji ASCII (bez polskich znaków)
 const CITY_COORDINATES = {
   Warszawa: { latitude: 52.2297, longitude: 21.0122 },
-  Kraków: { latitude: 50.0647, longitude: 19.945 },
-  Wrocław: { latitude: 51.1079, longitude: 17.0385 },
-  Gdańsk: { latitude: 54.352, longitude: 18.6466 },
-  Poznań: { latitude: 52.4064, longitude: 16.9252 },
-  Łódź: { latitude: 51.7592, longitude: 19.456 },
+  Krakow: { latitude: 50.0647, longitude: 19.945 },
+  Wroclaw: { latitude: 51.1079, longitude: 17.0385 },
+  Gdansk: { latitude: 54.352, longitude: 18.6466 },
+  Poznan: { latitude: 52.4064, longitude: 16.9252 },
+  Lodz: { latitude: 51.7592, longitude: 19.456 },
   Szczecin: { latitude: 53.4285, longitude: 14.5528 },
-  Rzeszów: { latitude: 50.0412, longitude: 21.9991 },
+  Rzeszow: { latitude: 50.0412, longitude: 21.9991 },
   Lublin: { latitude: 51.2465, longitude: 22.5684 },
+};
+
+// Pomocnicza funkcja transliterująca polskie znaki do ASCII
+const normalizeCityName = (s) => {
+  if (!s || typeof s !== 'string') return s;
+  const map = {
+    'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ż': 'z', 'ź': 'z',
+    'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ż': 'Z', 'Ź': 'Z',
+  };
+  return s.split('').map((ch) => map[ch] || ch).join('');
 };
 
 /**
@@ -97,13 +108,14 @@ const getExchangeRate = async () => {
  */
 const getWeatherData = async (city) => {
   try {
-    const coordinates = CITY_COORDINATES[city];
+    const normalizedCity = normalizeCityName(city);
+    const coordinates = CITY_COORDINATES[normalizedCity];
 
     if (!coordinates) {
       throw new Error(`Nieznane miasto: ${city}`);
     }
 
-    const cacheKey = `weather:${city}`;
+    const cacheKey = `weather:${normalizedCity}`;
     const cached = getCachedValue(cacheKey);
 
     if (cached) {
@@ -135,13 +147,14 @@ const getWeatherData = async (city) => {
  */
 const getAirQualityData = async (city) => {
   try {
-    const coordinates = CITY_COORDINATES[city];
+    const normalizedCity = normalizeCityName(city);
+    const coordinates = CITY_COORDINATES[normalizedCity];
 
     if (!coordinates) {
       throw new Error(`Nieznane miasto: ${city}`);
     }
 
-    const cacheKey = `air:${city}`;
+    const cacheKey = `air:${normalizedCity}`;
     const cached = getCachedValue(cacheKey);
 
     if (cached) {
