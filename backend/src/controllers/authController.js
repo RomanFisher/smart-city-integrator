@@ -128,7 +128,66 @@ const login = async (req, res) => {
   }
 };
 
+/**
+ * Usuwa użytkownika z MongoDB po identyfikatorze.
+ */
+const deleteUser = async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'Nie znaleziono użytkownika w bazie.' });
+    }
+
+    return res.status(200).json({
+      message: 'Użytkownik został pomyślnie usunięty z MongoDB.',
+      deletedUserId: req.params.id,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Błąd serwera podczas usuwania.',
+      error: error.message,
+    });
+  }
+};
+
+/**
+ * Aktualizuje użytkownika w MongoDB po identyfikatorze.
+ */
+const updateUser = async (req, res) => {
+  try {
+    const updates = { ...req.body };
+
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      updates.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'Nie znaleziono użytkownika w bazie.' });
+    }
+
+    return res.status(200).json({
+      message: 'Hasło zostało zaktualizowane',
+      updatedUserId: req.params.id,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Błąd serwera podczas aktualizacji.',
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  deleteUser,
+  updateUser,
 };

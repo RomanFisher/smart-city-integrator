@@ -52,6 +52,16 @@ const CITY_ALIASES = {
   'powiat m rzeszów': 'Rzeszów',
 };
 
+// Pomocnicza funkcja: usuwa polskie znaki diakrytyczne (transliteracja do ASCII)
+const stripDiacritics = (str) => {
+  if (!str || typeof str !== 'string') return str;
+  const map = {
+    'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ż': 'z', 'ź': 'z',
+    'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ż': 'Z', 'Ź': 'Z',
+  };
+  return str.split('').map((ch) => map[ch] || ch).join('');
+};
+
 const resolveCityName = (rawName) => {
   const normalized = normalizeCityName(rawName);
   if (CITY_ALIASES[normalized]) {
@@ -59,7 +69,14 @@ const resolveCityName = (rawName) => {
   }
 
   const canonicalCities = Object.keys(apiService.CITY_COORDINATES || {});
-  const matchedCity = canonicalCities.find((city) => normalized.includes(normalizeCityName(city)));
+  // Najpierw spróbuj dopasowania z uwzględnieniem oryginalnych znaków
+  let matchedCity = canonicalCities.find((city) => normalized.includes(normalizeCityName(city)));
+  if (matchedCity) return matchedCity;
+
+  // Jeśli nie znaleziono dopasowania, spróbuj wersji bez diakrytyków (ASCII)
+  const asciiNormalized = stripDiacritics(normalized);
+  matchedCity = canonicalCities.find((city) => asciiNormalized.includes(stripDiacritics(normalizeCityName(city))));
+
   return matchedCity || rawName;
 };
 
